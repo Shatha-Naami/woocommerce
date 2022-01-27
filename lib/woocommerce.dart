@@ -1904,7 +1904,8 @@ class WooCommerce {
 
   Future<MyCartFamcare> getMyCartFamcare() async {
     await getAuthTokenFromDb();
-    _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
+    // _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
+     _urlHeader[headerAuthorization] = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJmYW1jYXJlLmFwcCIsImlhdCI6MTYzNjMxNzQ3NywibmJmIjoxNjM2MzE3NDc3LCJleHAiOjE2MzY1NzY2NzcsInN1YiI6ImVCcTNRTyIsImF1dGgiOnsiaWQiOjcwMSwidHlwZSI6IlVzZXIifX0.5BL5CopdDCboALzYGNQrsasXP-bQinlkFPzUKy3gLNU';
     MyCartFamcare cart;
     final response = await http.get(Uri.parse(this.baseUrl + URL_GET_CART),
         headers: _urlHeader);
