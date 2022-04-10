@@ -48,6 +48,7 @@ import 'package:woocommerce/models/shipping_zone_method.dart';
 
 import 'constants/constants.dart';
 import 'models/affiliate_area.dart';
+import 'models/blog_model.dart';
 import 'models/cart.dart';
 import 'models/cart_item.dart';
 import 'models/coupon.dart';
@@ -1941,6 +1942,30 @@ class WooCommerce {
       final jsonStr = json.decode(response.body);
       AffiliateArea affiliateArea = AffiliateArea.fromJson(jsonStr);
       return affiliateArea;
+    } else {
+      _printToLog(' error: On ${baseUrl + URL_GET_CART}' + response.body);
+      WooCommerceError err =
+          WooCommerceError.fromJson(json.decode(response.body));
+      throw err;
+    }
+  }
+
+  /// Returns the current user's [BlogModel], information
+  Future<List<BlogModel>> getBlogsList() async {
+    await getAuthTokenFromDb();
+    _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
+    final response = await http
+        .get(Uri.parse(this.baseUrl + URL_GET_BLOGS_LIST), headers: _urlHeader);
+    _printToLog('response gotten : ' + response.toString());
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final jsonStr = json.decode(response.body);
+      List<BlogModel> blogsList = [];
+      for (var c in jsonStr) {
+        var item = BlogModel.fromJson(c);
+        _printToLog('item here : ' + item.toString());
+        blogsList.add(item);
+      }
+      return blogsList;
     } else {
       _printToLog(' error: On ${baseUrl + URL_GET_CART}' + response.body);
       WooCommerceError err =
