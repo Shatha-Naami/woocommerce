@@ -88,7 +88,7 @@ class BlogModel {
         categories: List<int>.from(json["categories"].map((x) => x)),
         tags: List<int>.from(json["tags"].map((x) => x)),
         yoastHead: json["yoast_head"],
-        yoastHeadJson: YoastHeadJson.fromJson(json["yoast_head_json"]),
+        yoastHeadJson: YoastHeadJson?.fromJson(json["yoast_head_json"]),
         links: Links.fromJson(json["_links"]),
       );
 }
@@ -339,8 +339,6 @@ class YoastHeadJson {
   factory YoastHeadJson.fromRawJson(String str) =>
       YoastHeadJson.fromJson(json.decode(str));
 
-  String toRawJson() => json.encode(toJson());
-
   factory YoastHeadJson.fromJson(Map<String, dynamic> json) => YoastHeadJson(
         title: json["title"],
         description: json["description"],
@@ -359,24 +357,6 @@ class YoastHeadJson {
         twitterMisc: TwitterMisc.fromJson(json["twitter_misc"]),
         schema: Schema.fromJson(json["schema"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "title": title,
-        "description": description,
-        "robots": robots!.toJson(),
-        "canonical": canonical,
-        "og_locale": ogLocale,
-        "og_type": ogType,
-        "og_title": ogTitle,
-        "og_description": ogDescription,
-        "og_url": ogUrl,
-        "og_site_name": ogSiteName,
-        "article_published_time": articlePublishedTime!.toIso8601String(),
-        "og_image": List<dynamic>.from(ogImage!.map((x) => x.toJson())),
-        "twitter_card": twitterCard,
-        "twitter_misc": twitterMisc!.toJson(),
-        "schema": schema!.toJson(),
-      };
 }
 
 class OgImage {
