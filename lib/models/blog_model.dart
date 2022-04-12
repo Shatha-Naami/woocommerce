@@ -97,7 +97,8 @@ class BlogModel {
             ? Specialist.fromJson(json["specialist"])
             : null,
         postCategories: (json['post_categories'] != null)
-            ? List<PostCategories>.from(json["post_categories"].map((x) => x))
+            ? List<PostCategories>.from(
+                json["post_categories"].map((x) => PostCategories.fromJson(x)))
             : null,
       );
 }
