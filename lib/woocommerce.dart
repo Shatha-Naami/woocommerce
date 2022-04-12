@@ -48,6 +48,7 @@ import 'package:woocommerce/models/shipping_zone_method.dart';
 
 import 'constants/constants.dart';
 import 'models/affiliate_area.dart';
+import 'models/blog_attachments_model.dart';
 import 'models/blog_model.dart';
 import 'models/cart.dart';
 import 'models/cart_item.dart';
@@ -1966,6 +1967,25 @@ class WooCommerce {
         blogsList.add(item);
       }
       return blogsList;
+    } else {
+      _printToLog(' error: On $baseURL' + response.body);
+      WooCommerceError err =
+          WooCommerceError.fromJson(json.decode(response.body));
+      throw err;
+    }
+  }
+
+  /// Returns the current user's [BlogAttachmentsModel], information
+  Future<BlogAttachmentsModel> getBlogAttachmentsModel(
+      {required String baseURL}) async {
+    await getAuthTokenFromDb();
+    _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
+    final response = await http.get(Uri.parse(baseURL), headers: _urlHeader);
+    _printToLog('response gotten : ' + response.toString());
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final jsonStr = json.decode(response.body);
+      BlogAttachmentsModel attachments = BlogAttachmentsModel.fromJson(jsonStr);
+      return attachments;
     } else {
       _printToLog(' error: On $baseURL' + response.body);
       WooCommerceError err =
