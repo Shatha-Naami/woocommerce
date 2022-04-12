@@ -30,7 +30,8 @@ class BlogModel {
     this.tags,
     this.yoastHead,
     this.yoastHeadJson,
-    this.links,
+    this.specialist,
+    this.postCategories,
   });
 
   final int? id;
@@ -58,7 +59,8 @@ class BlogModel {
   final List<int>? tags;
   final String? yoastHead;
   final YoastHeadJson? yoastHeadJson;
-  final Links? links;
+  final Specialist? specialist;
+  final List<PostCategories>? postCategories;
 
   factory BlogModel.fromRawJson(String str) =>
       BlogModel.fromJson(json.decode(str));
@@ -87,9 +89,16 @@ class BlogModel {
         meta: List<dynamic>.from(json["meta"].map((x) => x)),
         categories: List<int>.from(json["categories"].map((x) => x)),
         tags: List<int>.from(json["tags"].map((x) => x)),
-        yoastHead: json["yoast_head"],
-        yoastHeadJson: YoastHeadJson?.fromJson(json["yoast_head_json"]),
-        links: Links.fromJson(json["_links"]),
+        yoastHead: (json['yoast_head'] != null) ? json["yoast_head"] : null,
+        yoastHeadJson: (json['yoast_head_json'] != null)
+            ? YoastHeadJson.fromJson(json["yoast_head_json"])
+            : null,
+        specialist: (json['specialist'] != null)
+            ? Specialist.fromJson(json["specialist"])
+            : null,
+        postCategories: (json['post_categories'] != null)
+            ? List<PostCategories>.from(json["post_categories"].map((x) => x))
+            : null,
       );
 }
 
@@ -121,59 +130,6 @@ class Guid {
 
   factory Guid.fromJson(Map<String, dynamic> json) => Guid(
         rendered: json["rendered"],
-      );
-}
-
-class Links {
-  Links({
-    this.self,
-    this.collection,
-    this.about,
-    this.author,
-    this.replies,
-    this.versionHistory,
-    this.predecessorVersion,
-    this.wpFeaturedmedia,
-    this.wpAttachment,
-    this.wpTerm,
-    this.curies,
-  });
-
-  final List<About>? self;
-  final List<About>? collection;
-  final List<About>? about;
-  final List<AuthorElement>? author;
-  final List<AuthorElement>? replies;
-  final List<VersionHistory>? versionHistory;
-  final List<PredecessorVersion>? predecessorVersion;
-  final List<AuthorElement>? wpFeaturedmedia;
-  final List<About>? wpAttachment;
-  final List<WpTerm>? wpTerm;
-  final List<Cury>? curies;
-
-  factory Links.fromRawJson(String str) => Links.fromJson(json.decode(str));
-
-  factory Links.fromJson(Map<String, dynamic> json) => Links(
-        self: List<About>.from(json["self"].map((x) => About.fromJson(x))),
-        collection:
-            List<About>.from(json["collection"].map((x) => About.fromJson(x))),
-        about: List<About>.from(json["about"].map((x) => About.fromJson(x))),
-        author: List<AuthorElement>.from(
-            json["author"].map((x) => AuthorElement.fromJson(x))),
-        replies: List<AuthorElement>.from(
-            json["replies"].map((x) => AuthorElement.fromJson(x))),
-        versionHistory: List<VersionHistory>.from(
-            json["version-history"].map((x) => VersionHistory.fromJson(x))),
-        predecessorVersion: List<PredecessorVersion>.from(
-            json["predecessor-version"]
-                .map((x) => PredecessorVersion.fromJson(x))),
-        wpFeaturedmedia: List<AuthorElement>.from(
-            json["wp:featuredmedia"].map((x) => AuthorElement.fromJson(x))),
-        wpAttachment: List<About>.from(
-            json["wp:attachment"].map((x) => About.fromJson(x))),
-        wpTerm:
-            List<WpTerm>.from(json["wp:term"].map((x) => WpTerm.fromJson(x))),
-        curies: List<Cury>.from(json["curies"].map((x) => Cury.fromJson(x))),
       );
 }
 
@@ -808,4 +764,46 @@ class TwitterMisc {
         "كُتب بواسطة": empty,
         "وقت القراءة المُقدّر": twitterMisc,
       };
+}
+
+class Specialist {
+  Specialist({
+    this.id,
+    this.name,
+    this.avatar,
+    this.speciality,
+  });
+
+  final String? id;
+  final String? name;
+  final String? avatar;
+  final String? speciality;
+
+  factory Specialist.fromRawJson(String str) =>
+      Specialist.fromJson(json.decode(str));
+
+  factory Specialist.fromJson(Map<String, dynamic> json) => Specialist(
+        id: json["id"],
+        name: json["name"],
+        avatar: json["avatar"],
+        speciality: json["speciality"],
+      );
+}
+
+class PostCategories {
+  PostCategories({
+    this.id,
+    this.name,
+  });
+
+  final int? id;
+  final String? name;
+
+  factory PostCategories.fromRawJson(String str) =>
+      PostCategories.fromJson(json.decode(str));
+
+  factory PostCategories.fromJson(Map<String, dynamic> json) => PostCategories(
+        id: json["id"],
+        name: json["name"],
+      );
 }

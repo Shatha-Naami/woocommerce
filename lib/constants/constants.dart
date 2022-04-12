@@ -40,4 +40,3 @@ const URL_USER_ME = '$URL_WP_BASE/users/me';
 const URL_REGISTER_ENDPOINT = '$URL_WP_BASE/users/register';
 const URL_GET_CART = 'wp-json/wc/v3/famcare-get-cart';
 const URL_GET_AFFILIATE_AREA = 'wp-json/wc/v3/affiliate-area';
-const URL_GET_BLOGS_LIST = 'wp-json/wp/v2/posts';

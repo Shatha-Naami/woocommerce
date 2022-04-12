@@ -67,6 +67,7 @@ import 'models/products.dart';
 import 'models/shipping_method.dart';
 import 'models/shipping_zone.dart';
 import 'models/shipping_zone_location.dart';
+
 //import 'models/shipping_zone_method.dart';
 import 'models/tax_classes.dart';
 import 'models/tax_rate.dart';
@@ -1951,11 +1952,10 @@ class WooCommerce {
   }
 
   /// Returns the current user's [BlogModel], information
-  Future<List<BlogModel>> getBlogsList() async {
+  Future<List<BlogModel>> getBlogsList({required String baseURL}) async {
     await getAuthTokenFromDb();
     _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
-    final response = await http
-        .get(Uri.parse(this.baseUrl + URL_GET_BLOGS_LIST), headers: _urlHeader);
+    final response = await http.get(Uri.parse(baseURL), headers: _urlHeader);
     _printToLog('response gotten : ' + response.toString());
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
@@ -1967,7 +1967,7 @@ class WooCommerce {
       }
       return blogsList;
     } else {
-      _printToLog(' error: On ${baseUrl + URL_GET_CART}' + response.body);
+      _printToLog(' error: On $baseURL' + response.body);
       WooCommerceError err =
           WooCommerceError.fromJson(json.decode(response.body));
       throw err;
