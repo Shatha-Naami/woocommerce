@@ -1976,7 +1976,7 @@ class WooCommerce {
   }
 
   /// Returns the current user's [BlogAttachmentsModel], information
-  Future<BlogAttachmentsModel> getBlogAttachmentsModel(
+  Future<List<BlogAttachmentsModel>> getBlogAttachmentsModel(
       {required String baseURL}) async {
     await getAuthTokenFromDb();
     _urlHeader[headerAuthorization] = 'Bearer ' + _authToken!;
@@ -1984,7 +1984,12 @@ class WooCommerce {
     _printToLog('response gotten : ' + response.toString());
     if (response.statusCode >= 200 && response.statusCode < 300) {
       final jsonStr = json.decode(response.body);
-      BlogAttachmentsModel attachments = BlogAttachmentsModel.fromJson(jsonStr);
+      List<BlogAttachmentsModel> attachments = [];
+      for (var c in jsonStr) {
+        var item = BlogAttachmentsModel.fromJson(c);
+        _printToLog('item here : ' + item.toString());
+        attachments.add(item);
+      }
       return attachments;
     } else {
       _printToLog(' error: On $baseURL' + response.body);
