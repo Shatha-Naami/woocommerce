@@ -1,13 +1,16 @@
+import 'blog_model.dart';
+
 class BlogAttachmentsModel {
-  int? id;
-  String? name;
-  String? url;
+  final int? id;
+  final Guid? title;
+  final String? sourceUrl;
 
-  BlogAttachmentsModel({this.id, this.name, this.url});
+  BlogAttachmentsModel({this.id, this.title, this.sourceUrl});
 
-  BlogAttachmentsModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    url = json['url'];
-  }
+  factory BlogAttachmentsModel.fromJson(Map<String, dynamic> json) =>
+      BlogAttachmentsModel(
+        id: json['id'],
+        title: Guid.fromJson(json["title"]),
+        sourceUrl: json['source_url'],
+      );
 }

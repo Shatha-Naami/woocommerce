@@ -773,12 +773,18 @@ class Specialist {
     this.name,
     this.avatar,
     this.speciality,
+    this.bio,
+    this.states,
+    this.rating,
   });
 
   final String? id;
   final String? name;
   final String? avatar;
   final String? speciality;
+  final String? bio;
+  final String? states;
+  final double? rating;
 
   factory Specialist.fromRawJson(String str) =>
       Specialist.fromJson(json.decode(str));
@@ -788,6 +794,9 @@ class Specialist {
         name: json["name"],
         avatar: json["avatar"],
         speciality: json["speciality"],
+        bio: json["bio"],
+        states: json["states"],
+        rating: json["rating"],
       );
 }
 
