@@ -784,7 +784,7 @@ class Specialist {
   final String? speciality;
   final String? bio;
   final String? states;
-  final double? rating;
+  final num? rating;
 
   factory Specialist.fromRawJson(String str) =>
       Specialist.fromJson(json.decode(str));
