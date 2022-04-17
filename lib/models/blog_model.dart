@@ -769,7 +769,7 @@ class TwitterMisc {
 
 class Specialist {
   Specialist({
-    this.id,
+    required this.id,
     this.name,
     this.avatar,
     this.speciality,
@@ -778,7 +778,7 @@ class Specialist {
     this.rating,
   });
 
-  final String? id;
+  final String id;
   final String? name;
   final String? avatar;
   final String? speciality;
@@ -790,7 +790,7 @@ class Specialist {
       Specialist.fromJson(json.decode(str));
 
   factory Specialist.fromJson(Map<String, dynamic> json) => Specialist(
-        id: json["id"],
+        id: json["id"]!.toString(),
         name: json["name"],
         avatar: json["avatar"],
         speciality: json["speciality"],
