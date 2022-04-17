@@ -775,7 +775,7 @@ class Specialist {
     this.speciality,
     this.bio,
     this.states,
-    this.rating,
+    required this.rating,
   });
 
   final String id;
@@ -784,7 +784,7 @@ class Specialist {
   final String? speciality;
   final String? bio;
   final String? states;
-  final num? rating;
+  final String rating;
 
   factory Specialist.fromRawJson(String str) =>
       Specialist.fromJson(json.decode(str));
@@ -796,7 +796,7 @@ class Specialist {
         speciality: json["speciality"],
         bio: json["bio"],
         states: json["states"],
-        rating: json["rating"],
+        rating: json["rating"]!.toString(),
       );
 }
 
